@@ -7,7 +7,7 @@ class Tweet extends Component{
         console.log(this.props)
         return(
             <div className="tweet">
-                
+                tweet
             </div>
         )
     }
@@ -16,8 +16,9 @@ class Tweet extends Component{
 function mapStateToProps ({authUsers, users, tweets}, { id }) {
     const tweet = tweets[id];
     //const parent=tweet ? tweet.replyingTo : null
-    //const authors=users[tweet.author]
-    console.log(tweet.author)
+    const authors=users[tweet.author]
+    console.log(authors)
+    console.log('users',users)
     
     return {
         authUsers,
