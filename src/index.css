@@ -16,6 +16,7 @@ a {
   padding: 10px;
 }
 
+
 .btn {
   text-transform: uppercase;
   margin: 35px auto;
@@ -160,4 +161,9 @@ li {
   margin-top: 10px;
   font-size: 20px;
   color: #C3392A;
+  
+}
+
+#username{
+    margin-left: 65%
 }
