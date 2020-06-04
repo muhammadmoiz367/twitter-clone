@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import Tweet from './tweet'
 import NewTweet from './newTweet'
  
 class TweetPage extends Component{
     render(){
-        const {id,replies}=this.props
+        const {id,replies,auth}=this.props
+        if(!auth.uid) 
+            return <Redirect to="/login" />
         return(
             <div>
                 <br/><br/>
@@ -24,13 +27,14 @@ class TweetPage extends Component{
     }
 }
 
-function mapStateToProps({tweets,authUsers,users},props){
+function mapStateToProps({tweets,authUsers,users,firebase},props){
     const {id} = props.match.params
     return{
         id,
         replies:!tweets[id]
             ? []
-            : tweets[id].replies.sort((a,b)=>tweets[b].timestamp - tweets[a].timestamp)
+            : tweets[id].replies.sort((a,b)=>tweets[b].timestamp - tweets[a].timestamp),
+        auth:firebase.auth
     }
 }
 

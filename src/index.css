@@ -3,6 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
   color: #252525;
+  overflow-x: hidden !important
 }
 
 a {
@@ -47,18 +48,44 @@ a {
 .active {
   font-weight: bold;
 }
-
+h3{
+    text-transform: capitalize
+}
 .nav ul {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   text-decoration: none;
+    background-color: #1b1bff;
+    width: 130%;
+    margin-top: -7px;
+    margin-left: -13% !important;
+    height: 50px
 }
-
+.nav a,
+.nav li{
+    color: white;
+    padding-top: 17px; 
+    cursor: pointer
+        
+}
 .nav li:first-child {
-  padding-left: 0;
+  padding-left: 8%;
+    
 }
-
+.nav .avatar{
+    margin-top: -10px;
+    left:75% !important;
+    position: absolute;
+    height: 35px;
+    font-size: 17px;
+    background-color: rgb(248, 248, 248);
+    color: #1b1bff;
+    text-transform: uppercase !important
+}
+#logout{
+    margin-left: 58%
+}
 ul {
   padding-left: 0;
 }
@@ -164,6 +191,49 @@ li {
   
 }
 
-#username{
-    margin-left: 65%
+@media screen and (max-width: 900px){
+    .nav li:first-child {
+        padding-left: 15%;  
+    }
+    #logout{
+        margin-left: 45%
+    }
 }
+.paper {
+    margin-top: 100px;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.main .avatar {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f50057;
+  }
+  
+.form {
+    margin-top: 1px;
+  }
+.errorText {
+    color: #f50057;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+#signupform .paper{
+    margin-top: 10px;
+    display: flex;
+    padding: 10px 20px;
+    flex-direction: column;
+    align-items: center;
+}
+#toSignup p{
+    margin-top: 15px;
+    margin-left: -35%;
+    text-align: center;
+}
+.uploadButton{
+    
+}
+

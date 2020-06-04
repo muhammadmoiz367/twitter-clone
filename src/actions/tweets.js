@@ -1,5 +1,5 @@
 import {saveLikeToggle,saveTweet} from '../utils/api'
-import {showLoading, hideLoading} from 'react-redux-loading'
+import {setProgressBar} from './progressBar'
 export const RECEIVE_TWEETS='RECEIVE_TWEETS'
 export const TOGGLE_TWEET='TOGGLE_TWEET'
 export const ADD_TWEET='ADD_TWEET'
@@ -40,15 +40,16 @@ export function handleToggleTweet(info){
 }
 
 export function handleAddTweet(text,replyingTo){
-    return(dispatch,getState)=>{
+    return(dispatch,getState,{getFirebase,getFirestore})=>{
+        const firestore=getFirestore()
         const {authUsers} = getState()
-        dispatch(showLoading())
+        dispatch(setProgressBar('OPEN'))
         return saveTweet({
             text,
             author:authUsers,
             replyingTo
         })
         .then((tweet)=> dispatch(addTweet(tweet)))
-        .then(()=> dispatch(hideLoading()))
+        .then(()=> dispatch(setProgressBar('CLOSE')))
     }
 }

@@ -1,46 +1,57 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
-import {BrowserRouter as Router,Route } from 'react-router-dom'
+import {BrowserRouter as Router,Route, Redirect } from 'react-router-dom'
 import Dashboard from './dashboard'
-import LoadingBar from 'react-redux-loading'
+import ProgressBar from "./progressBar";
 import NewTweet from './newTweet'
 import TweetPage from './tweetPage'
 import Navbar from './navbar'
+import LogIn from './signin'
+import SignUp from './signup'
 
 class App extends Component {
     componentDidMount(){
         this.props.dispatch(handleInitialData())
     }
     render() {
+        console.log(this.props)
+        const {auth}= this.props
     return (
         <Router>
             <Fragment>
-            <LoadingBar style={{backgroundColor:"blue"}}/>
+            <ProgressBar /> 
             <div className="container">
-                <Navbar />    
+                <Navbar />
+                {auth.uid && auth.uid 
+                    ? ( <Redirect to={{ pathname: "/" }} /> )
+                    : ( <Redirect to={{ pathname: "/login" }} /> )
+                }
                 {this.props.loading===true
-                 ? null
-                 :  <div>
-                        <Route path="/" exact component={Dashboard} />
-                        <Route path="/new" component={NewTweet} />
-                        <Route path="/tweet/:id" component={TweetPage} />
-                    </div>
+                    ? null
+                    :  <div>
+                            <Route path="/" exact component={Dashboard} />
+                            <Route path="/new" component={NewTweet} />
+                            <Route path="/tweet/:id" component={TweetPage} />
+                            <Route path="/login" component={LogIn} />
+                            <Route path="/signup" component={SignUp} />
+                        </div>
                 }
             </div>
           </Fragment>  
         </Router>
         
-      
     )
   }
 }
 
 
-function mapStateToProps({authUsers}){
+function mapStateToProps(state){
+    console.log(state)
     return{
-        loading:authUsers === null
+        loading:state.authUsers === null,
+        auth: state.firebase.auth
     }
 }
 
-export default connect()(App)
+export default connect(mapStateToProps)(App)

@@ -1,25 +1,18 @@
 import React,{Component} from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import Tweet from './tweet'
 
 
 class Dashboard extends Component{
-    getName(){
-        const {users,authUsers} = this.props
-        for(let user in users){
-            console.log(users)
-            if(user===authUsers){
-                return users[user].name.split(' ')[0]
-            }
-        }
-    }
-    
     render(){
-        console.log(this.props)
-        
+        const {auth,profile} =this.props
+        console.log(profile)
+        if(!auth.uid) 
+            return <Redirect to="/login" />
         return(
             <div>
-                <h3 className="center">Your Timeline {this.getName()}</h3>
+                <h3 className="center">Your Timeline {profile.firstName}</h3>
                 <ul className="dashboard-list">
                     {this.props.tweetsID.map((id)=>(
                         <li key={id}>
@@ -32,12 +25,14 @@ class Dashboard extends Component{
     }
 }
 
-function mapStateToProps({ tweets,authUsers, users }){
+function mapStateToProps({ tweets,authUsers, users, firebase }){
     return{
         authUsers,
         users,
         tweetsID:Object.keys(tweets)
-        .sort((a,b)=>tweets[b].timestamp - tweets[a].timestamp)
+        .sort((a,b)=>tweets[b].timestamp - tweets[a].timestamp),
+        auth:firebase.auth,
+        profile:firebase.profile
     }
 }
 

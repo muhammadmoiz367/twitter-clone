@@ -28,7 +28,10 @@ class NewTweet extends Component{
     }
     render(){
         const  {text,toHome} =this.state
+        const {auth}=this.props
         const tweetLeft=280-text.length
+        if(!auth.uid) 
+            return <Redirect to="/login" />
         
         if(toHome===true){
            return <Redirect to="/" />
@@ -55,5 +58,10 @@ class NewTweet extends Component{
         )
     }
 }
+function mapStateToProps({firebase}){
+    return{
+        auth:firebase.auth
+    }
+}
 
-export default connect()(NewTweet)
+export default connect(mapStateToProps)(NewTweet)
